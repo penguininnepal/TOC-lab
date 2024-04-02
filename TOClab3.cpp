@@ -39,4 +39,5 @@ int main() {
         cout << "The string is not accepted by the DFA." << endl;
     }
     return 0;
-}no of a's and b's over the i/p alphabet  E = {a,b} and develop a program in any HLL for the above DFA
+}
+no of a's and b's over the i/p alphabet  E = {a,b} and develop a program in any HLL for the above DFA
