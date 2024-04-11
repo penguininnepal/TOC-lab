@@ -1,5 +1,5 @@
 /* 
-Design a PDA that accepts all the strings with equal no.of 0�s and 1�s over
+Design a PDA that accepts all the strings with equal no.of 0?s and 1?s over
 the input symbol, E ={0,1} for a language, L = 0^n 1^n | n >= 1 
 */
 #include <iostream>
@@ -68,3 +68,20 @@ int main()
 	q0(0);
 	return 0;
 }
+
+/*
+Input: "0011"
+Output: Accepted
+
+Input: "00001111"
+Output: Accepted
+
+Input: "010101"
+Output: Rejected
+
+Input: "1100"
+Output: Rejected
+
+Input: "1010"
+Output: Rejected
+*/
