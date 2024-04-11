@@ -1,66 +1,70 @@
-// Lab-4 Design a PDA that accepts all the strings with equal no.of 0’s and 1’s over 
-//the input symbol, ?={0,1} for a language, L=0n1n/ n>=1.
+/* 
+Design a PDA that accepts all the strings with equal no.of 0�s and 1�s over
+the input symbol, E ={0,1} for a language, L = 0^n 1^n | n >= 1 
+*/
 #include <iostream>
-#include <conio.h>
-#include <stdio.h>
+
+using namespace std;
+
+char Input[10];
+char stack[10];
+int Top = -1;
+
+void q0(int);
+void q1(int);
+void q2(int);
+
+void q0(int i){
+	if(Input[i]=='0' && stack[Top]== 'Z')
+	{
+		stack[++Top]= 'A';
+		q0(i + 1);
+	}
+	else if(Input[i]=='0' && stack[Top]== 'A')
+	{
+		stack[++Top]= 'A';
+		q0(i + 1);
+	}
+	else if(Input[i]=='1' && stack[Top]== 'A')
+	{
+		Top--;
+		q1(i + 1);
+	}
+	else
+	{
+		cout<<"\n Output: Invalid String";
+		exit(0);
+	}
+}
+
+void q1(int i){
+	if(Input[i]=='1' && stack[Top]== 'A')
+	{
+		Top--;
+		q1(i + 1);
+	}
+	else if(Input[i]=='\0' && stack[Top]== 'Z')
+	{
+		Top--;
+		q2(i + 1);
+	}
+	else
+	{
+		cout<<"\n Output: Invalid String";
+		exit(0);
+	}
+}
+
+void q2(int i){
+	cout<<"\n Output: Valid String";
+	exit(0);
+}
 
 int main()
 {
-    char Input[10];
-    char stack[10]; // Implementing stack through array.
-    int Top = -1;
-
-    std::cout << "Enter a binary string to validate (input string should consist of 0s and 1s)\n";
-    gets(Input);
-
-    stack[++Top] = 'Z'; // Taking 'Z' as the initial stack symbol.
-    int i = -1;
-
-q0:
-    i++;
-    if (Input[i] == '0' && stack[Top] == 'Z')
-    {
-        stack[++Top] = 'A';
-        goto q0;
-    }
-    else if (Input[i] == '0' && stack[Top] == 'A')
-    {
-        stack[++Top] = 'A';
-        goto q0;
-    }
-    else if (Input[i] == '1' && stack[Top] == 'A')
-    {
-        Top--;
-        if (Input[i + 1] == '\0' && stack[Top] == 'Z')
-        {
-            std::cout << "\nOutput: Valid String";
-            return 0;
-        }
-        goto q1;
-    }
-    else
-    {
-        goto Invalid;
-    }
-
-q1:
-    i++;
-    if (Input[i] == '1' && stack[Top] == 'A')
-    {
-        Top--;
-        if (Input[i + 1] == '\0' && stack[Top] == 'Z')
-        {
-            std::cout << "\nOutput: Valid String";
-            return 0;
-        }
-        goto q1;
-    }
-    else
-    {
-        goto Invalid;
-    }
-
-Invalid:
-    std::cout << "\nOutput: Invalid String";
-    return 0;
+	cout<<"Enter binary string: ";
+	gets(Input);
+	stack[++Top] = 'Z';
+	q0(0);
+	return 0;
 }
