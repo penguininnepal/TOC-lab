@@ -1,75 +1,81 @@
 //Lab-5 Design a PDA that accept L= wcwR where w is any binary string and wR is 
 //the reverse of that string and c is the special symbol over the input symbol, ?=
-{0,1}
-#include <iostream.h>
-#include <conio.h>
-#include <stdio.h>
-void main()
-{
-char Input[10];
+// L = wCw' , E = {0, 1}
+#include <iostream>
+using namespace std;
+
+char In[10];
 char stack[10];
 int Top = -1;
-clrscr();
-cout<<"Enter string to be validate\n";
-gets(Input);
-stack[++Top] = 'Z';//Taking 'Z'as an initial stack symbol.
-int i=-1;
-q0:
-i++;
-if(Input[i]=='0' && stack[Top]== 'Z')
+
+void q0(int);
+void q1(int);
+
+void q0(int i){
+	if(In[i]=='0' && stack[Top]== 'Z')
+	{
+		stack[++Top]= 'A';
+		q0(i + 1);
+	}
+	else if(In[i]=='1' && stack[Top]== 'Z')
+	{
+		stack[++Top]= 'B';
+		q0(i + 1);
+	}
+	else if(In[i]=='0' && (stack[Top]== 'A'|| stack[Top]== 'B'))
+	{
+		stack[++Top]= 'A';
+		q0(i + 1);
+	}
+	else if(In[i]=='1' && (stack[Top]== 'A'|| stack[Top]== 'B'))
+	{
+		stack[++Top]= 'B';
+		q0(i + 1);
+	}
+	else if(In[i]=='C' && (stack[Top]== 'A'||stack[Top]== 'B'))
+	{
+		q1(i + 1);
+	}
+	else
+	{
+		cout<<"\n Output: Invalid String";
+		exit(0);
+	}
+}
+
+void q1(int i){
+	if(In[i]=='0' && stack[Top]== 'A')
+	{
+		Top--;
+		q1(i + 1);
+	}
+	else if(In[i]=='1' && stack[Top]== 'B')
+	{
+		Top--;
+		q1(i + 1);
+	}
+	else if(In[i]=='\0' && stack[Top]== 'Z') 
+	{
+		// q2();{
+		cout<<"\n Output: Valid String";
+		exit(0);
+	}
+	else
+	{
+		cout<<"\n Output: Invalid String";
+		exit(0);
+	}
+}
+
+int main()
 {
-stack[++Top]= 'A';
-goto q0;
+	cout<<"Enter binary string: ";
+	gets(In);
+	stack[++Top] = 'Z';
+	q0(0);
+	return 0;
 }
-else if(Input[i]=='1' && stack[Top]== 'Z')
-{
-stack[++Top]= 'B';
-goto q0;
-}
-else if(Input[i]=='0' && (stack[Top]== 'A'|| stack[Top]== 'B'))
-{
-stack[++Top]= 'A';
-goto q0;
-}
-else if(Input[i]=='1' && (stack[Top]== 'A'|| stack[Top]== 'B'))
-{
-stack[++Top]= 'B';
-goto q0;
-}
-else if(Input[i]=='C' && (stack[Top]== 'A'||stack[Top]== 'B'))
-{
-goto q1;
-}
-else
-{
-goto Invalid;
-}
-q1:
-i++;
-if(Input[i]=='0' && stack[Top]== 'A')
-{
-Top--;
-goto q1;
-}
-else if(Input[i]=='1' && stack[Top]== 'B')
-{
-Top--;
-goto q1;
-}
-else if(Input[i]=='\0' && stack[Top]== 'Z')
-{
-goto Valid;
-}
-else
-{
-goto Invalid;
-}
-Valid:
-cout<<"\n Output: Valid String";
-goto exit;
-Invalid:
-cout<<"\n Output: Invalid String";
-goto exit;
-exit:
-getch();
-}
+
+// Output 
+// enter : 0101C1010
+// valid string
