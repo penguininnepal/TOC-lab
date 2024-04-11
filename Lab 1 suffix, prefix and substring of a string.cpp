@@ -1,3 +1,7 @@
+/*
+suffix, prefix,and substring of a string
+*/
+
 #include<iostream>
 using namespace std;
 void prefix(string);
@@ -54,4 +58,3 @@ int main(){
 		}
 		cout<<endl;
 	}
-
